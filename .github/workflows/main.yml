@@ -10,7 +10,7 @@ env:
   APP_CONTAINER_NAME: product_app_2025
   SONAR_PROJECT_KEY: product-app
   SONAR_HOST_URL: http://localhost:9000
-  SONAR_TOKEN: squ_ecf1c25c0d0208bc08acac925b01ee2dc9e6b9da
+  SONAR_TOKEN: squ_2b54e5db054320f48c30ae60464d5d35d41c5326
 
 jobs:
   build_analyze_deploy:
@@ -29,6 +29,7 @@ jobs:
 
       - name: ⚙️ Construir el .jar con Maven
         run: mvn clean package -DskipTests
+        working-directory: micro-product
 
       - name: 📊 Análisis con SonarQube
         run: |
@@ -36,6 +37,7 @@ jobs:
             -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
             -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
             -Dsonar.login=${{ env.SONAR_TOKEN }}
+        working-directory: micro-product
 
       - name: 🚀 Despliegue con Docker Compose
         run: |
